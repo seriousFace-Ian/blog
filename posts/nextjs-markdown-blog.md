@@ -8,10 +8,6 @@ tags:
   - 教程
 ---
 
-# 使用 Next.js 构建 Markdown 博客
-
-在这篇文章中，我将分享如何使用 Next.js 构建一个支持 Markdown 的博客系统。
-
 ## 技术选型
 
 ### 为什么选择 Next.js？

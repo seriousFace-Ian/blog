@@ -7,67 +7,29 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen py-12 md:py-20">
+    <div className="py-12 md:py-16">
       <div className="max-w-3xl mx-auto px-6">
         <header className="mb-12 animate-fade-in">
-          <h1 className="text-3xl md:text-4xl font-bold text-white tracking-tight">关于</h1>
-          <div className="mt-4 h-px bg-gradient-to-r from-amber-500/50 via-orange-500/50 to-transparent" />
+          <h1 className="text-3xl md:text-4xl font-medium text-foreground tracking-tight">关于</h1>
+          <div className="mt-6 h-px bg-border" />
         </header>
 
         <div className="prose max-w-none animate-fade-in" style={{ animationDelay: '100ms' }}>
-          <h2>👋 你好</h2>
           <p>
-            欢迎来到我的博客！我是一名热爱技术的开发者，这里是我记录学习、思考和成长的地方。
+            欢迎来到我的博客！前端开发者，正在转全栈开发的路上，这里将记录我的转型之路和一些生活碎片。欢迎互相交流。
           </p>
-
-          <h2>🛠 技术栈</h2>
-          <p>这个博客使用以下技术构建：</p>
-          <ul>
-            <li>
-              <strong>Next.js</strong> - React 框架，支持服务端渲染和静态生成
-            </li>
-            <li>
-              <strong>TypeScript</strong> - 类型安全的 JavaScript
-            </li>
-            <li>
-              <strong>Tailwind CSS</strong> - 原子化 CSS 框架
-            </li>
-            <li>
-              <strong>Markdown</strong> - 文章格式，简洁高效
-            </li>
-          </ul>
 
           <h2>📮 联系我</h2>
-          <p>如果你有任何问题或想法，欢迎通过以下方式联系我：</p>
           <ul>
-            <li>GitHub</li>
-            <li>Email</li>
-            <li>Twitter / X</li>
+            <li>
+              <a href="https://github.com/seriousFace-Ian">GitHub</a>
+            </li>
+            <li>
+              <a href="mailto:ianchoi.cn@gmail.com">Email</a>
+            </li>
           </ul>
-
-          <h2>📝 关于文章</h2>
-          <p>
-            博客中的所有文章都以 Markdown 格式编写，存放在 <code>posts/</code> 目录下。
-            每篇文章都支持以下 frontmatter 字段：
-          </p>
-
-          <pre>
-            <code>
-              {`---
-title: 文章标题
-date: 2024-01-01
-excerpt: 文章摘要
-tags:
-  - 标签1
-  - 标签2
----`}
-            </code>
-          </pre>
         </div>
       </div>
     </div>
   )
 }
-
-
-

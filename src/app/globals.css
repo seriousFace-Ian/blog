@@ -1,8 +1,33 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Semantic tokens aligned with Figma Make “Personal blog” (no shadcn) */
 :root {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted-foreground: #717182;
+  --border: rgba(0, 0, 0, 0.1);
+  --primary: #030213;
+  --accent: rgba(0, 0, 0, 0.06);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --border: oklch(0.269 0 0);
+  --primary: oklch(0.985 0 0);
+  --accent: oklch(0.269 0 0);
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
 }
 
 html {
@@ -21,31 +46,56 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #c1c1c1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
   background: #444;
 }
 
 /* Selection color */
 ::selection {
-  background: rgba(251, 191, 36, 0.3);
-  color: #fafafa;
+  background: color-mix(in oklch, var(--foreground) 16%, transparent);
+  color: var(--foreground);
 }
 
 /* Prose styles for markdown content */
 .prose {
-  --tw-prose-body: #d4d4d8;
-  --tw-prose-headings: #fafafa;
-  --tw-prose-links: #fbbf24;
-  --tw-prose-bold: #fafafa;
-  --tw-prose-code: #fbbf24;
+  --tw-prose-body: #3f3f46;
+  --tw-prose-headings: #0a0a0a;
+  --tw-prose-links: #030213;
+  --tw-prose-bold: #0a0a0a;
+  --tw-prose-code: #030213;
+  --tw-prose-pre-bg: #f4f4f5;
+  --tw-prose-pre-code: #3f3f46;
+  --tw-prose-quotes: #71717a;
+  --tw-prose-quote-borders: #d4d4d8;
+  --tw-prose-hr: #e4e4e7;
+}
+
+.dark .prose {
+  --tw-prose-body: oklch(0.85 0 0);
+  --tw-prose-headings: oklch(0.985 0 0);
+  --tw-prose-links: oklch(0.985 0 0);
+  --tw-prose-bold: oklch(0.985 0 0);
+  --tw-prose-code: oklch(0.985 0 0);
   --tw-prose-pre-bg: #18181b;
   --tw-prose-pre-code: #d4d4d8;
   --tw-prose-quotes: #a1a1aa;
@@ -72,7 +122,11 @@ body {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #27272a;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.dark .prose h2 {
+  border-bottom-color: #27272a;
 }
 
 .prose h3 {
@@ -100,20 +154,28 @@ body {
 
 .prose code {
   color: var(--tw-prose-code);
-  background: #27272a;
+  background: #f4f4f5;
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.875em;
   font-family: var(--font-geist-mono), monospace;
 }
 
+.dark .prose code {
+  background: #27272a;
+}
+
 .prose pre {
   background: var(--tw-prose-pre-bg);
-  border: 1px solid #27272a;
+  border: 1px solid #e4e4e7;
   border-radius: 12px;
   padding: 1.25rem;
   overflow-x: auto;
   margin: 1.5rem 0;
+}
+
+.dark .prose pre {
+  border-color: #27272a;
 }
 
 .prose pre code {
@@ -172,6 +234,13 @@ body {
 
 /* Gradient text */
 .gradient-text {
+  background: linear-gradient(135deg, #d97706 0%, #ea580c 50%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .gradient-text {
   background: linear-gradient(135deg, #fcd34d 0%, #f97316 50%, #ef4444 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -180,6 +249,12 @@ body {
 
 /* Glass effect */
 .glass {
+  background: rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .glass {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);

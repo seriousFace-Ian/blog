@@ -44,12 +44,12 @@ export default async function PostPage({ params }: Props) {
     : ''
 
   return (
-    <article className="min-h-screen py-12 md:py-20">
+    <article className="py-12 md:py-16">
       <div className="max-w-3xl mx-auto px-6">
         {/* Back button */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-amber-400 transition-colors mb-8 group"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8 group"
         >
           <svg
             className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform"
@@ -64,23 +64,18 @@ export default async function PostPage({ params }: Props) {
 
         {/* Header */}
         <header className="mb-12 animate-fade-in">
-          {/* Date */}
-          <time className="text-sm font-medium text-zinc-500 tracking-wider uppercase">
-            {formattedDate}
-          </time>
+          <time className="text-sm text-muted-foreground">{formattedDate}</time>
 
-          {/* Title */}
-          <h1 className="mt-4 text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight">
+          <h1 className="mt-4 text-3xl md:text-4xl font-medium text-foreground tracking-tight leading-tight">
             {post.title}
           </h1>
 
-          {/* Tags */}
           {post.tags && post.tags.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">
               {post.tags.map(tag => (
                 <span
                   key={tag}
-                  className="px-3 py-1 text-xs font-medium text-zinc-400 bg-white/5 rounded-full border border-white/10"
+                  className="px-2.5 py-1 text-xs text-muted-foreground bg-accent/50 rounded-md border border-border"
                 >
                   {tag}
                 </span>
@@ -88,8 +83,7 @@ export default async function PostPage({ params }: Props) {
             </div>
           )}
 
-          {/* Divider */}
-          <div className="mt-8 h-px bg-gradient-to-r from-amber-500/50 via-orange-500/50 to-transparent" />
+          <div className="mt-8 h-px bg-border" />
         </header>
 
         {/* Content */}
@@ -100,11 +94,11 @@ export default async function PostPage({ params }: Props) {
         />
 
         {/* Footer */}
-        <footer className="mt-16 pt-8 border-t border-white/10">
-          <div className="flex items-center justify-between">
+        <footer className="mt-16 pt-8 border-t border-border">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-amber-400 transition-colors group"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
             >
               <svg
                 className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform"
@@ -121,10 +115,7 @@ export default async function PostPage({ params }: Props) {
               </svg>
               返回文章列表
             </Link>
-            <a
-              href="#"
-              className="text-sm text-zinc-400 hover:text-amber-400 transition-colors"
-            >
+            <a href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
               回到顶部 ↑
             </a>
           </div>
@@ -133,4 +124,3 @@ export default async function PostPage({ params }: Props) {
     </article>
   )
 }
-
