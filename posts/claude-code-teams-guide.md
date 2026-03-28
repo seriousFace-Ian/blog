@@ -1,3 +1,13 @@
+---
+title: Claude code Teams 上手体验
+date: 2026-03-28
+excerpt: Teams 功能搭建及使用体验
+tags:
+  - Claude Code
+  - Agent
+  - 教程
+---
+
 # Claude code Teams 上手体验
 
 ## Claude Features
