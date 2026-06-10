@@ -9,6 +9,17 @@ const eslintConfig = defineConfig([
   ...nextTs,
   ...standardConfig,
   prettier,
+  {
+    settings: {
+      'import-x/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
+        node: true,
+      },
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
