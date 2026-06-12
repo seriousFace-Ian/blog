@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next"
 import { Geist, Geist_Mono as GeistMono } from 'next/font/google'
 
 import Footer from '@/components/Footer'
@@ -5,6 +6,7 @@ import Header from '@/components/Header'
 import ThemeProvider from '@/components/ThemeProvider'
 
 import type { Metadata } from 'next'
+
 import './globals.css'
 
 const geistSans = Geist({
@@ -32,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background text-foreground antialiased`}>
+        <Analytics />
         <ThemeProvider>
           <div className="flex min-h-screen flex-col">
             <Header />
