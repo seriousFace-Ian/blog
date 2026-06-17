@@ -24,7 +24,7 @@ export default function Header() {
         </div>
         <div className="flex items-center gap-1 shrink-0">
           <a
-            href="https://github.com"
+            href="https://github.com/seriousFace-Ian"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-foreground hover:bg-accent transition-colors"
