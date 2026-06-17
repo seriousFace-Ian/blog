@@ -8,16 +8,11 @@ interface PostCardProps {
   post: PostData
 }
 
-function estimateReadMinutes(post: PostData): number {
-  const text = `${post.title}${post.excerpt ?? ''}`
-  return Math.max(1, Math.ceil(text.length / 500))
-}
-
 export default function PostCard({ post }: PostCardProps) {
   const formattedDate = post.date
     ? format(new Date(post.date), 'yyyy年MM月dd日', { locale: zhCN })
     : ''
-  const readMin = estimateReadMinutes(post)
+  const readMin = post.readMinutes
 
   return (
     <article className="border-b border-border last:border-b-0">

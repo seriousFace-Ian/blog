@@ -30,6 +30,30 @@ export interface PostData {
   tags?: string[]
   contentHtml?: string
   toc?: TocItem[]
+  readMinutes: number
+}
+
+/**
+ * Estimate reading time from raw markdown content. Handles mixed CJK + Latin
+ * text by counting Chinese characters and English words separately, then
+ * combining them with typical reading speeds:
+ *   - Chinese: ~400 chars/min
+ *   - English: ~220 words/min
+ * Returns at least 1 minute.
+ */
+function estimateReadMinutes(markdown: string): number {
+  const stripped = markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+
+  const chineseChars = stripped.match(/[\u4e00-\u9fa5]/g)?.length ?? 0
+  const englishWords = stripped.match(/[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*/g)?.length ?? 0
+
+  const minutes = chineseChars / 400 + englishWords / 220
+  return Math.max(1, Math.ceil(minutes))
 }
 
 /**
@@ -57,6 +81,7 @@ export function getSortedPostsData(): PostData[] {
         excerpt: matterResult.data.excerpt || '',
         coverImage: matterResult.data.coverImage,
         tags: matterResult.data.tags || [],
+        readMinutes: estimateReadMinutes(matterResult.content),
       }
     })
 
@@ -101,11 +126,12 @@ function rehypeExtractToc(toc: TocItem[]) {
 }
 
 /**
- * Reads optional `#w=NUMBER` / `#h=NUMBER` hash params from `<img>` `src` and
- * turns them into inline `width` / `height` styles. Pure number → `px`, value
- * with a CSS unit (e.g. `50%`, `20rem`) is passed through verbatim.
+ * Reads optional hash params from `<img>` `src` and turns them into inline styles:
+ *   - `#w=NUMBER` / `#h=NUMBER` — width / height (pure number → `px`)
+ *   - `#align=left|center|right` — horizontal alignment
  *
- * Example: `![alt](/foo.webp#w=320)` → `<img src="/foo.webp" style="display: block; width: 320px;">`.
+ * Example: `![alt](/foo.webp#w=320&align=left)` →
+ * `<img src="/foo.webp" style="display: block; width: 320px; margin-left: 0; margin-right: auto;">`.
  *
  * The hash is stripped from `src` after parsing so it doesn't leak into the URL.
  * Images without a hash are left untouched, so existing posts keep their behavior.
@@ -122,12 +148,16 @@ function rehypeImageSize() {
       const params = new URLSearchParams(src.slice(hashIndex + 1))
       const rawW = params.get('w')
       const rawH = params.get('h')
-      if (!rawW && !rawH) return
+      const align = params.get('align')
+      if (!rawW && !rawH && !align) return
 
       const toCssLength = (v: string) => (/^\d+(\.\d+)?$/.test(v) ? `${v}px` : v)
       const decls: string[] = ['display: block']
       if (rawW) decls.push(`width: ${toCssLength(rawW)}`)
       if (rawH) decls.push(`height: ${toCssLength(rawH)}`)
+      if (align === 'left') decls.push('margin-left: 0', 'margin-right: auto')
+      else if (align === 'right') decls.push('margin-left: auto', 'margin-right: 0')
+      else if (align === 'center') decls.push('margin-left: auto', 'margin-right: auto')
 
       node.properties = node.properties ?? {}
       node.properties.src = src.slice(0, hashIndex)
@@ -204,5 +234,6 @@ export async function getPostData(slug: string): Promise<PostData> {
     excerpt: matterResult.data.excerpt || '',
     coverImage: matterResult.data.coverImage,
     tags: matterResult.data.tags || [],
+    readMinutes: estimateReadMinutes(matterResult.content),
   }
 }
